@@ -11,10 +11,15 @@ jobs:
       - image: circleci/node:15
     steps:
       - run: echo "hello world" > ~/output.txt
+      - run: return 1
       - persist_to_workspace:
           root: ~/
           paths:
             - output.txt
+      - run:
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
 
   print_output_file:
     docker:
